@@ -1,5 +1,5 @@
 /*=====================================================================
-□ Infomation
+□ INFORMATION
   ○ Data : 22.05.2018
   ○ Mail : eun1310434@naver.com
   ○ Blog : https://blog.naver.com/eun1310434
@@ -7,38 +7,6 @@
      - Do it android app Programming
      - Hello JAVA Programming
      - http://itmining.tistory.com/5
-
-□ Function
-  ○ AsyncTask 를 이용하여 백그라운드 작업
-     - 기존의 핸들러를 사용하는 방식에서 간편하게 만듬
-
-  ○ protected void onPreExecute()
-     - 초기값 설정
-     - 활용하는 곳에서 execute()함수를 사용할 때 호출됨.
-
-  ○ protected Integer doInBackground(Integer ... values)
-     - Thread의 run()에 해당하는 곳
-     - AsyncTask<Integer , Integer , Integer>선언 시 맨 앞에 Integer를 선언 하였기에
-     - 인자값이 Integer ... values로 정의됨
-     - Integer ... 란 가변 파라미터로 여러개의 인자값을 받을 수 있음
-     - doInBackground의 결과값 → onPostExecute에서 받음.. 그렇기에 타입이 서로 같음
-
-  ○ protected void onProgressUpdate(Integer ... values)
-     - UI 업데이트를 처리하는 곳
-     - AsyncTask<Integer , Integer , Integer>선언 시 두번째에 Integer를 선언 하였기에
-     - 인자값이 Integer ... values로 정의됨
-     - Integer ... 란 가변 파라미터로 여러개의 인자값을 받을 수 있음
-
-  ○ protected void onPostExecute(Integer result)
-     - 최종결과 처리
-     - doInBackground의 결과값 → onPostExecute에서 받음
-     - AsyncTask<Integer , Integer , Integer>선언 시 마지막에 Integer를 선언 하였기에
-     - 인자값이 Integer ... values로 정의됨
-     - Integer ... 란 가변 파라미터로 여러개의 인자값을 받을 수 있음
-     - doInBackground의 결과값 → onPostExecute에서 받음.. 그렇기에 타입이 서로 같음
-
-  ○ protected void onCancelled() {
-     - task.cancel(true);을 사용할 때 호출되는 곳
 
 □ Study
   ○ Thread
@@ -111,15 +79,37 @@
      - 기존의 핸들러를 사용하는 방식에서 간편하게 만듬
      - UI 접근하는 곳과 Thread 작업하는 곳을 분리 사용
 
+□ Function
+  ○ AsyncTask 를 이용하여 백그라운드 작업
+     - 기존의 핸들러를 사용하는 방식에서 간편하게 만듬
 
+  ○ protected void onPreExecute()
+     - 초기값 설정
+     - 활용하는 곳에서 execute()함수를 사용할 때 호출됨.
 
-  ○ 학습체크
-      - 스레드와 멀티스레드란?
-      - 자바 스레드 작성법은?
-      - 스레드의 우선순위란?
-      - 스레드의 동기화 방법은?
-      - 스레드 그룹의 사용 목적은?
-      - 스레드 풀의 사용 목적은?
+  ○ protected Integer doInBackground(Integer ... values)
+     - Thread의 run()에 해당하는 곳
+     - AsyncTask<Integer , Integer , Integer>선언 시 맨 앞에 Integer를 선언 하였기에
+     - 인자값이 Integer ... values로 정의됨
+     - Integer ... 란 가변 파라미터로 여러개의 인자값을 받을 수 있음
+     - doInBackground의 결과값 → onPostExecute에서 받음.. 그렇기에 타입이 서로 같음
+
+  ○ protected void onProgressUpdate(Integer ... values)
+     - UI 업데이트를 처리하는 곳
+     - AsyncTask<Integer , Integer , Integer>선언 시 두번째에 Integer를 선언 하였기에
+     - 인자값이 Integer ... values로 정의됨
+     - Integer ... 란 가변 파라미터로 여러개의 인자값을 받을 수 있음
+
+  ○ protected void onPostExecute(Integer result)
+     - 최종결과 처리
+     - doInBackground의 결과값 → onPostExecute에서 받음
+     - AsyncTask<Integer , Integer , Integer>선언 시 마지막에 Integer를 선언 하였기에
+     - 인자값이 Integer ... values로 정의됨
+     - Integer ... 란 가변 파라미터로 여러개의 인자값을 받을 수 있음
+     - doInBackground의 결과값 → onPostExecute에서 받음.. 그렇기에 타입이 서로 같음
+
+  ○ protected void onCancelled() {
+     - task.cancel(true);을 사용할 때 호출되는 곳
 =====================================================================*/
 package com.eun1310434.asynctask;
 
