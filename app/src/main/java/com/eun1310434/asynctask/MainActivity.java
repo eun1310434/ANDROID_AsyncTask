@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
                     task.setOnProgressListener(new BackgroundAsyncTask.OnProgressListener() {
                         @Override
                         public void onProgressChanged(int value, String txt) {
-
                             if(txt.equals("Finished")){
                                 executeButton.setText("Start");
                                 task = null;

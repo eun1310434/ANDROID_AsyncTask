@@ -113,24 +113,23 @@
 =====================================================================*/
 
 package com.eun1310434.asynctask;
-
 import android.os.AsyncTask;
 import android.util.Log;
 
 public class BackgroundAsyncTask extends AsyncTask<Integer , Integer , Integer> {
-    int value;
-    boolean stop;
+    private int value;
+    private boolean stop;
 
-    //인터페이스를 활용한 날짜나 시간이 바뀔 때 호출되는 리스너 새로 정의
-    //innerClass
+    /**
+     *innerClass
+     *인터페이스를 활용한 날짜나 시간이 바뀔 때 호출되는 리스너 새로 정의
+     */
     public interface OnProgressListener {
         void onProgressChanged(int value, String txt);
     }
 
     //리스너 객체
-    private OnProgressListener listener; //
-
-
+    private OnProgressListener listener;
     public void setOnProgressListener(OnProgressListener onProgressListener){
         // 해당 클래스를 활용하는 곳에서 setOnDateTimeChangedListener를 선언시
         // OnDateTimeChangedListener 생성
@@ -138,61 +137,73 @@ public class BackgroundAsyncTask extends AsyncTask<Integer , Integer , Integer> 
     }
 
 
+    /**
+     * 초기값 설정
+     * execute()함수 호출 시 적용.
+     */
     @Override
     protected void onPreExecute() {
-        //초기값 설정
-        //활용하는 곳에서 execute()함수를 사용할 때 호출됨.
-
         value = 0;
-        stop=false;
+        stop = false;
         listener.onProgressChanged(value,"Start");
         Log.e("BackgroundAsyncTask","onPreExecute()");
     }
 
+
+    /**
+     * @param values
+     * @return
+     * Thread의 run()에 해당하는 업무 실행
+     * AsyncTask<Integer , Integer , Integer>선언 시 맨 앞에 Integer를 선언 하였기에
+     * 인자값이 Integer ... values로 정의됨
+     * Integer ... 란 가변 파라미터로 여러개의 인자값을 받을 수 있음
+     * doInBackground의 결과값 → onPostExecute에서 받음.. 그렇기에 타입이 서로 같음
+     */
     @Override
     protected Integer doInBackground(Integer ... values) {
-        //Thread의 run()에 해당하는 곳
-        //AsyncTask<Integer , Integer , Integer>선언 시 맨 앞에 Integer를 선언 하였기에
-        //인자값이 Integer ... values로 정의됨
-        //Integer ... 란 가변 파라미터로 여러개의 인자값을 받을 수 있음
-        //doInBackground의 결과값 → onPostExecute에서 받음.. 그렇기에 타입이 서로 같음
         Log.e("BackgroundAsyncTask","doInBackground() - value : "+ +values[0]);
-
-
         while (isCancelled() == false) {
             if(stop == false){
                 value++;
                 if (value >= 100) {
                     break;
                 } else {
-                    // protected void onProgressUpdate(Integer ... values)를 호출하여 UI - UP DATE
-                    // 기존 handler를 사용하지 않는다.
+                    // protected void onProgressUpdate(Integer ... values)를 호출
+                    // UI - UPDATE 기존 handler를 사용하지 않는다.
                     publishProgress(value);
                 }
             }
 
-            try {
-                Thread.sleep(100);
+            try {Thread.sleep(100);
             } catch (InterruptedException ex) {}
         }
         return value;
     }
 
+
+    /**
+     * @param values
+     * UI 업데이트를 처리
+     * AsyncTask<Integer , Integer , Integer>선언 시 두번째에 Integer를 선언 하였기에
+     * 인자값이 Integer ... values로 정의됨
+     * Integer ... 란 가변 파라미터로 여러개의 인자값을 받을 수 있음
+     */
     @Override
     protected void onProgressUpdate(Integer ... values) {
         super.onProgressUpdate(values);
-        //UI 업데이트를 처리하는 곳
-        //AsyncTask<Integer , Integer , Integer>선언 시 두번째에 Integer를 선언 하였기에
-        //인자값이 Integer ... values로 정의됨
-        //Integer ... 란 가변 파라미터로 여러개의 인자값을 받을 수 있음
         Log.e("BackgroundAsyncTask","onProgressUpdate() - values : "+ +values[0]);
         listener.onProgressChanged(values[0], values[0].toString()+"%");
     }
 
+
+    /**
+     * @param result
+     * 최종결과 처리
+     */
     @Override
     protected void onPostExecute(Integer result) {
         super.onPostExecute(result);
-        //최종결과 처리
+        //
         //doInBackground의 결과값 → onPostExecute에서 받음
         //AsyncTask<Integer , Integer , Integer>선언 시 마지막에 Integer를 선언 하였기에
         //인자값이 Integer ... values로 정의됨
@@ -200,7 +211,6 @@ public class BackgroundAsyncTask extends AsyncTask<Integer , Integer , Integer> 
         //doInBackground의 결과값 → onPostExecute에서 받음.. 그렇기에 타입이 서로 같음
         Log.e("BackgroundAsyncTask","onPostExecute() - values : "+result);
         listener.onProgressChanged(result, "Finished");
-
     }
 
     @Override
